@@ -43,7 +43,7 @@ class healingDao:
         self.db.close()
         return adId
 
-    def insert(self, query, data):
+    def insertUsers(self, query, data):
         self.cursor.execute(query, data)
         self.cursor.fetchall()
         print("db 업데이트 완료")
