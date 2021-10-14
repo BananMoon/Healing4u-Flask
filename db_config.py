@@ -16,7 +16,6 @@ class healingDao:
         self.cursor.execute(query, data)
         rows = self.cursor.fetchall()
         
-        # rows[0], rows[1]..
         adData = random.choice(rows)
         adId = adData['ad_id']
         print("db_config2에서 랜덤으로 출력: ", adData)
