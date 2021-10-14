@@ -3,50 +3,34 @@ from flask import Flask, render_template, jsonify
 import pymysql
 import datetime
 # import db_config
-import db_config2
+import db_config
 # HTML 파일을 렌더링할 때 추가적으로 필요한 파일들을 static이라는 디렉터리에 넣겠다.
 app = Flask(__name__, static_url_path="/static")
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
 
-# SELECT 함수 예제
 # @app.route('/select', methods=['GET'])
 # def select():
-#     conn = db_config.Database()
+#     conn = db_config.healingDao()
  
-#     sql     = "SELECT user_id, now_emotion \
-#                 FROM users"
-#     row     = conn.executeAll(sql)
+#     query     = "SELECT user_id, now_emotion FROM `users`"
+#     row     = conn.select(query)
  
-#     print(row)
- 
+#     print("server에서 출력: ",row[0]['user_id']);
+#     # row : [{'user_id': 2, 'now_emotion': 0}, {'user_id': 3, 'now_emotion': 1}, {'user_id': 4, 'now_emotion': 0}, {'user_id': 5, 'now_emotion': 0}]
+
 #     return render_template('test.html',
 #                             result=None,
 #                             resultData=row[0],
 #                             resultUPDATE=None)
 
-@app.route('/select', methods=['GET'])
-def select():
-    conn = db_config2.healingDao()
- 
-    query     = "SELECT user_id, now_emotion FROM `users`"
-    row     = conn.select(query)
- 
-    print("server에서 출력: ",row[0]['user_id']);
-    # row : [{'user_id': 2, 'now_emotion': 0}, {'user_id': 3, 'now_emotion': 1}, {'user_id': 4, 'now_emotion': 0}, {'user_id': 5, 'now_emotion': 0}]
-
-    return render_template('test.html',
-                            result=None,
-                            resultData=row[0],
-                            resultUPDATE=None)
-
 
 @app.route('/test', methods=['GET'])
 def insert():
-    conn = db_config2.healingDao()
+    conn = db_config.healingDao()
     
     # 1. 광고데이터 랜덤으로 추출
     ## (1) 오늘의 월

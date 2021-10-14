@@ -1,6 +1,7 @@
 import pymysql
+import random
 
-class Database():
+class healingDao:
     def __init__(self):
         self.db = pymysql.connect(
             host= 'healing.ceuy4iegap9i.ap-northeast-2.rds.amazonaws.com',
@@ -11,23 +12,36 @@ class Database():
         )
         self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
 
-    def insert(self, query, args=)
+    def selectAD(self, query, data):
+        self.cursor.execute(query, data)
+        rows = self.cursor.fetchall()
+        
+        # rows[0], rows[1]..
+        adData = random.choice(rows)
+        adId = adData['ad_id']
+        print("db_config2에서 랜덤으로 출력: ", adData)
+        print("출력된 데이터의 id: ", adId )
+        
+        self.db.commit()
+        # self.db.close()
+        return adId
 
-    def execute(self, query, args={}):
-        self.cursor.execute(query, args)
-    
-    def executeOne(self, query, args={}):
-        self.cursor.execute(query, args)
-        row = self.cursor.fetchone()
-        return row
-    
-    def executeAll(self, query, args={}):
-        self.cursor.execute(query, args)
+    def insertUsers(self, query, data):
+        self.cursor.execute(query, data)
+        self.cursor.fetchall()
+        print("db 업데이트 완료")
+
+        self.db.commit()
+        # self.db.close()
+
+
+    def selectUser(self, query):
+        self.cursor.execute(query)
         row = self.cursor.fetchall()
-        return row
+        print(row)
+        userId = row[0]['user_id']
+        print("출력된 데이터의 user id: ", userId )
 
-    def commit():
-        db.commit()
-
-
-# DB_URL = f"mysql+mysqlconnector://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['database']}?charset=utf8"
+        self.db.commit()
+        self.db.close()
+        return userId
