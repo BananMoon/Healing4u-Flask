@@ -73,25 +73,22 @@ def insert():
     # Q. socket통신해서 값있냐? 물어보고
     # (1) 그 값을 result로 받으면 전달 가능
     # (2) 변수 자체를 인식못할수도...
-    now_emotion = 1;
+    now_emotion = 1
 
     # 3. users 테이블에 now_emotion,  ad_id 를 insert
-    insert_data=(now_emotion, ad_id)     # ex) (5,2,16)
+    insert_data=(now_emotion, ad_id)     # ex) (2,16)
 
-    insert_query = "INSERT INTO `users` (now_emotion, ad_id) VALUES (%s, %s)"
-    
-    # 여기서 위의 쿼리문을 실행해서 값을 insert한 후, userId값을 select해야하는데 값 두개를 한번에 하는건 그때 오류 해결을 못했네요..ㅠ
-    # 아래 86번 문장 주석을 풀면 에러 발생합니다.
+    insert_query = "INSERT INTO `users` (now_emotion, ad_id) VALUES (%s, %s);"
+    conn.insertUsers(insert_query, insert_data)
 
-    # conn.insertUsers(insert_query, insert_data)
-
-    # 추가) 가장 최근의 필드를 꺼내서 그거의 user_id를 웹서버에 전송
-    # SELECT * FROM users ORDER BY user_id DESC LIMIT 1;
-
+    # 4. 가장 최근의 필드의 user_id를 조회하여 웹서버에 응답
+    select_query = "SELECT user_id FROM `users` ORDER BY user_id DESC LIMIT 1;"
+    user_id = conn.selectUser(select_query)
+    print("딥러닝서버에서 user id 출력: ", user_id)
 
     # 5. user_id, now_emotion, ad_id 웹서버로 전송
     return jsonify({
-        'user_id': 5,
+        'user_id': user_id,
         'ad_id': ad_id
     })
 

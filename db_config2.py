@@ -52,41 +52,28 @@ class healingDao:
         self.db.close()
 
 
-    def insEmp(self, empno, name, department,phone):
-        db = pymysql.connect(
-            host= 'healing.ceuy4iegap9i.ap-northeast-2.rds.amazonaws.com',
-            user= 'healing4u',
-            password= 'healing4u',
-            db= 'healingDB',
-            charset='utf8'
-        )
-        curs = db.cursor()
-        
-        sql = '''insert into emp (empno, name, department, phone) values(%s,%s,%s,%s)'''
-        curs.execute(sql,(empno, name, department,phone))
-        db.commit()
-        db.close()
-    
-    def updEmp(self, empno, name, department,phone): 
-        db = pymysql.connect(host='localhost', user='root', db='python', password='python', charset='utf8')
-        curs = db.cursor()
-        
-        sql = "update emp set name=%s, department=%s, phone=%s where empno=%s"
-        curs.execute(sql,(name, department, phone, empno))
-        db.commit()
-        db.close()
-    def delEmp(self, empno):
-        db = pymysql.connect(host='localhost', user='root', db='python', password='python', charset='utf8')
-        curs = db.cursor()
-        
-        sql = "delete from emp where empno=%s"
-        curs.execute(sql,empno)
-        db.commit()
-        db.close()
+    def selectUser(self, query):
+        self.cursor.execute(query)
+        userId = self.cursor.fetchall()
+        print("출력된 데이터의 user id: ", userId )
 
-# if __name__ == '__main__':
-#     #MyEmpDao().insEmp('aaa', 'bb', 'cc', 'dd')
-#     #MyEmpDao().updEmp('aa', 'dd', 'dd', 'aa')
-#     #MyEmpDao().delEmp('aaa')
-#     emplist = healingDao().select();
-#     print(emplist)
+        self.db.commit()
+        self.db.close()
+        return userId
+    # def updEmp(self, empno, name, department,phone): 
+    #     db = pymysql.connect(host='localhost', user='root', db='python', password='python', charset='utf8')
+    #     curs = db.cursor()
+        
+    #     sql = "update emp set name=%s, department=%s, phone=%s where empno=%s"
+    #     curs.execute(sql,(name, department, phone, empno))
+    #     db.commit()
+    #     db.close()
+    # def delEmp(self, empno):
+    #     db = pymysql.connect(host='localhost', user='root', db='python', password='python', charset='utf8')
+    #     curs = db.cursor()
+        
+    #     sql = "delete from emp where empno=%s"
+    #     curs.execute(sql,empno)
+    #     db.commit()
+    #     db.close()
+
