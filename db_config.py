@@ -21,8 +21,6 @@ class healingDao:
         print("db_config2에서 랜덤으로 출력: ", adData)
         print("출력된 데이터의 id: ", adId )
         
-        self.db.commit()
-        # self.db.close()
         return adId
 
     def insertUsers(self, query, data):
@@ -31,8 +29,6 @@ class healingDao:
         print("db 업데이트 완료")
 
         self.db.commit()
-        # self.db.close()
-
 
     def selectUser(self, query):
         self.cursor.execute(query)
@@ -40,7 +36,5 @@ class healingDao:
         print(row)
         userId = row[0]['user_id']
         print("출력된 데이터의 user id: ", userId )
-
-        self.db.commit()
         self.db.close()
         return userId
